@@ -1,6 +1,7 @@
 package br.com.ehsolucoes.cursomc.services;
 
 import br.com.ehsolucoes.cursomc.domain.Categoria;
+import br.com.ehsolucoes.cursomc.dto.CategoriaDTO;
 import br.com.ehsolucoes.cursomc.repositories.CategoriaRepository;
 import br.com.ehsolucoes.cursomc.services.exceptions.DataIntegrityException;
 import br.com.ehsolucoes.cursomc.services.exceptions.ObjectNotFoundException;
@@ -55,6 +56,10 @@ public class CategoriaService {
     public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
+    }
+
+    public Categoria fromDTO(CategoriaDTO objDto){
+        return new Categoria(objDto.getId(), objDto.getNome());
     }
 
 }
