@@ -1,6 +1,8 @@
 package br.com.ehsolucoes.cursomc.config;
 
 import br.com.ehsolucoes.cursomc.services.DBService;
+import br.com.ehsolucoes.cursomc.services.EmailService;
+import br.com.ehsolucoes.cursomc.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -25,5 +27,10 @@ public class DevConfig {
             return false;
         dbService.instantiateTestDatabase();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService(){
+        return  new SmtpEmailService();
     }
 }
