@@ -3,12 +3,15 @@ package br.com.ehsolucoes.cursomc.services;
 import br.com.ehsolucoes.cursomc.domain.Cidade;
 import br.com.ehsolucoes.cursomc.domain.Cliente;
 import br.com.ehsolucoes.cursomc.domain.Endereco;
+import br.com.ehsolucoes.cursomc.domain.enums.Perfil;
 import br.com.ehsolucoes.cursomc.domain.enums.TipoCliente;
 import br.com.ehsolucoes.cursomc.dto.ClienteDTO;
 import br.com.ehsolucoes.cursomc.dto.ClienteNewDTO;
 import br.com.ehsolucoes.cursomc.repositories.CidadeRepository;
 import br.com.ehsolucoes.cursomc.repositories.ClienteRepository;
 import br.com.ehsolucoes.cursomc.repositories.EnderecoRepository;
+import br.com.ehsolucoes.cursomc.security.UserSS;
+import br.com.ehsolucoes.cursomc.services.exceptions.AuthorizationException;
 import br.com.ehsolucoes.cursomc.services.exceptions.DataIntegrityException;
 import br.com.ehsolucoes.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,12 @@ public class ClienteService {
     private BCryptPasswordEncoder pe;
 
     public Cliente find(Integer id){
+
+        UserSS user = UserService.authentiated();
+        if(user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())){
+            throw new AuthorizationException("Acesso negado");
+        }
+
         Optional<Cliente> obj = repo.findById(id);
         return obj.orElseThrow(
                 () -> new ObjectNotFoundException(
