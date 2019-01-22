@@ -1,22 +1,28 @@
--- MySQL dump 10.10
+-- MySQL Administrator dump 1.4
 --
--- Host: localhost    Database: curso_spring
 -- ------------------------------------------------------
 -- Server version	5.0.16-nt
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
+
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
 
 --
--- Table structure for table `categoria`
+-- Create schema curso_spring
+--
+
+CREATE DATABASE IF NOT EXISTS heroku_0b70333788d70cc;
+USE heroku_0b70333788d70cc;
+
+--
+-- Definition of table `categoria`
 --
 
 DROP TABLE IF EXISTS `categoria`;
@@ -30,15 +36,20 @@ CREATE TABLE `categoria` (
 -- Dumping data for table `categoria`
 --
 
-
 /*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
-LOCK TABLES `categoria` WRITE;
-INSERT INTO `categoria` VALUES (1,'Informática'),(2,'Escritório'),(3,'Cama mesa e banho'),(4,'Eletrônicos'),(5,'Jardinagem'),(6,'Decoração'),(7,'Perfumaria');
-UNLOCK TABLES;
+INSERT INTO `categoria` (`id`,`nome`) VALUES 
+ (1,'Informática'),
+ (2,'Escritório'),
+ (3,'Cama mesa e banho'),
+ (4,'Eletrônicos'),
+ (5,'Jardinagem'),
+ (6,'Decoração'),
+ (7,'Perfumaria');
 /*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
 
+
 --
--- Table structure for table `cidade`
+-- Definition of table `cidade`
 --
 
 DROP TABLE IF EXISTS `cidade`;
@@ -54,15 +65,16 @@ CREATE TABLE `cidade` (
 -- Dumping data for table `cidade`
 --
 
-
 /*!40000 ALTER TABLE `cidade` DISABLE KEYS */;
-LOCK TABLES `cidade` WRITE;
-INSERT INTO `cidade` VALUES (1,'Uberlândia',1),(2,'São Paulo',2),(3,'Campinas',2);
-UNLOCK TABLES;
+INSERT INTO `cidade` (`id`,`nome`,`estado_id`) VALUES 
+ (1,'Uberlândia',1),
+ (2,'São Paulo',2),
+ (3,'Campinas',2);
 /*!40000 ALTER TABLE `cidade` ENABLE KEYS */;
 
+
 --
--- Table structure for table `cliente`
+-- Definition of table `cliente`
 --
 
 DROP TABLE IF EXISTS `cliente`;
@@ -71,6 +83,7 @@ CREATE TABLE `cliente` (
   `cpf_ou_cnpj` varchar(255) default NULL,
   `email` varchar(255) default NULL,
   `nome` varchar(255) default NULL,
+  `senha` varchar(255) default NULL,
   `tipo` int(11) default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `UK_cmxo70m08n43599l3h0h07cc6` (`email`)
@@ -80,15 +93,15 @@ CREATE TABLE `cliente` (
 -- Dumping data for table `cliente`
 --
 
-
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-LOCK TABLES `cliente` WRITE;
-INSERT INTO `cliente` VALUES (1,'01314561642','maria@a.com','Maria Silva',1);
-UNLOCK TABLES;
+INSERT INTO `cliente` (`id`,`cpf_ou_cnpj`,`email`,`nome`,`senha`,`tipo`) VALUES 
+ (1,'01314561642','eduardo@prosanearinfo.com.br','Maria Silva','$2a$10$99upU4zg5ceRx/Jpuk1IqO42QfShVoqxaLj3CSmsipZHnS6vRnOt6',1),
+ (2,'01314561642','eduardohmferreira@gmail.com','Ana Costa','$2a$10$hc5w1KhuorxfNBI6Rv5TBu5nK/YUzLtVLA.UGdTVUr1ronhB063WO',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 
+
 --
--- Table structure for table `endereco`
+-- Definition of table `endereco`
 --
 
 DROP TABLE IF EXISTS `endereco`;
@@ -110,15 +123,16 @@ CREATE TABLE `endereco` (
 -- Dumping data for table `endereco`
 --
 
-
 /*!40000 ALTER TABLE `endereco` DISABLE KEYS */;
-LOCK TABLES `endereco` WRITE;
-INSERT INTO `endereco` VALUES (1,'Jardim','38220834','Apto 300','Rua Flores','300',1,1),(2,'Centro','38777012','Sala 800','Avenia Matos','105',2,1);
-UNLOCK TABLES;
+INSERT INTO `endereco` (`id`,`bairro`,`cep`,`complemento`,`logradouro`,`numero`,`cidade_id`,`cliente_id`) VALUES 
+ (1,'Jardim','38220834','Apto 300','Rua Flores','300',1,1),
+ (2,'Centro','38777012','Sala 800','Avenia Matos','105',2,1),
+ (3,'Centro','38777012',NULL,'Avenia Floriano','2106',2,2);
 /*!40000 ALTER TABLE `endereco` ENABLE KEYS */;
 
+
 --
--- Table structure for table `estado`
+-- Definition of table `estado`
 --
 
 DROP TABLE IF EXISTS `estado`;
@@ -132,15 +146,15 @@ CREATE TABLE `estado` (
 -- Dumping data for table `estado`
 --
 
-
 /*!40000 ALTER TABLE `estado` DISABLE KEYS */;
-LOCK TABLES `estado` WRITE;
-INSERT INTO `estado` VALUES (1,'Minas Gerais'),(2,'São Paulo');
-UNLOCK TABLES;
+INSERT INTO `estado` (`id`,`nome`) VALUES 
+ (1,'Minas Gerais'),
+ (2,'São Paulo');
 /*!40000 ALTER TABLE `estado` ENABLE KEYS */;
 
+
 --
--- Table structure for table `item_pedido`
+-- Definition of table `item_pedido`
 --
 
 DROP TABLE IF EXISTS `item_pedido`;
@@ -158,15 +172,16 @@ CREATE TABLE `item_pedido` (
 -- Dumping data for table `item_pedido`
 --
 
-
 /*!40000 ALTER TABLE `item_pedido` DISABLE KEYS */;
-LOCK TABLES `item_pedido` WRITE;
-INSERT INTO `item_pedido` VALUES (0,2000,1,1,1),(0,80,2,1,3),(100,800,1,2,2);
-UNLOCK TABLES;
+INSERT INTO `item_pedido` (`desconto`,`preco`,`quantidade`,`pedido_id`,`produdo_id`) VALUES 
+ (0,2000,1,1,1),
+ (0,80,2,1,3),
+ (100,800,1,2,2);
 /*!40000 ALTER TABLE `item_pedido` ENABLE KEYS */;
 
+
 --
--- Table structure for table `pagamento`
+-- Definition of table `pagamento`
 --
 
 DROP TABLE IF EXISTS `pagamento`;
@@ -180,15 +195,15 @@ CREATE TABLE `pagamento` (
 -- Dumping data for table `pagamento`
 --
 
-
 /*!40000 ALTER TABLE `pagamento` DISABLE KEYS */;
-LOCK TABLES `pagamento` WRITE;
-INSERT INTO `pagamento` VALUES (1,2),(2,1);
-UNLOCK TABLES;
+INSERT INTO `pagamento` (`pedido_id`,`estado`) VALUES 
+ (1,2),
+ (2,1);
 /*!40000 ALTER TABLE `pagamento` ENABLE KEYS */;
 
+
 --
--- Table structure for table `pagamento_com_boleto`
+-- Definition of table `pagamento_com_boleto`
 --
 
 DROP TABLE IF EXISTS `pagamento_com_boleto`;
@@ -203,15 +218,14 @@ CREATE TABLE `pagamento_com_boleto` (
 -- Dumping data for table `pagamento_com_boleto`
 --
 
-
 /*!40000 ALTER TABLE `pagamento_com_boleto` DISABLE KEYS */;
-LOCK TABLES `pagamento_com_boleto` WRITE;
-INSERT INTO `pagamento_com_boleto` VALUES (NULL,'2017-01-01 00:00:00',2);
-UNLOCK TABLES;
+INSERT INTO `pagamento_com_boleto` (`data_pagamento`,`data_vencimento`,`pedido_id`) VALUES 
+ (NULL,'2017-01-01 00:00:00',2);
 /*!40000 ALTER TABLE `pagamento_com_boleto` ENABLE KEYS */;
 
+
 --
--- Table structure for table `pagamento_com_cartao`
+-- Definition of table `pagamento_com_cartao`
 --
 
 DROP TABLE IF EXISTS `pagamento_com_cartao`;
@@ -225,15 +239,14 @@ CREATE TABLE `pagamento_com_cartao` (
 -- Dumping data for table `pagamento_com_cartao`
 --
 
-
 /*!40000 ALTER TABLE `pagamento_com_cartao` DISABLE KEYS */;
-LOCK TABLES `pagamento_com_cartao` WRITE;
-INSERT INTO `pagamento_com_cartao` VALUES (6,1);
-UNLOCK TABLES;
+INSERT INTO `pagamento_com_cartao` (`numero_de_parcelas`,`pedido_id`) VALUES 
+ (6,1);
 /*!40000 ALTER TABLE `pagamento_com_cartao` ENABLE KEYS */;
 
+
 --
--- Table structure for table `pedido`
+-- Definition of table `pedido`
 --
 
 DROP TABLE IF EXISTS `pedido`;
@@ -251,15 +264,38 @@ CREATE TABLE `pedido` (
 -- Dumping data for table `pedido`
 --
 
-
 /*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
-LOCK TABLES `pedido` WRITE;
-INSERT INTO `pedido` VALUES (1,'2017-01-01 10:32:00',1,1),(2,'2017-01-01 19:35:00',1,2);
-UNLOCK TABLES;
+INSERT INTO `pedido` (`id`,`instante`,`cliente_id`,`endereco_de_entrega_id`) VALUES 
+ (1,'2017-01-01 10:32:00',1,1),
+ (2,'2017-01-01 19:35:00',1,2);
 /*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
 
+
 --
--- Table structure for table `produto`
+-- Definition of table `perfis`
+--
+
+DROP TABLE IF EXISTS `perfis`;
+CREATE TABLE `perfis` (
+  `cliente_id` int(11) NOT NULL,
+  `perfis` int(11) default NULL,
+  KEY `FKsobr8hl9guwr8775lyl1mncg2` (`cliente_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `perfis`
+--
+
+/*!40000 ALTER TABLE `perfis` DISABLE KEYS */;
+INSERT INTO `perfis` (`cliente_id`,`perfis`) VALUES 
+ (1,2),
+ (2,1),
+ (2,2);
+/*!40000 ALTER TABLE `perfis` ENABLE KEYS */;
+
+
+--
+-- Definition of table `produto`
 --
 
 DROP TABLE IF EXISTS `produto`;
@@ -274,15 +310,62 @@ CREATE TABLE `produto` (
 -- Dumping data for table `produto`
 --
 
-
 /*!40000 ALTER TABLE `produto` DISABLE KEYS */;
-LOCK TABLES `produto` WRITE;
-INSERT INTO `produto` VALUES (1,'Computador',2000),(2,'Impressora',800),(3,'Mouse',80),(4,'Mesa de escritório',300),(5,'Toalha',50),(6,'Colcha',200),(7,'TV true color',1200),(8,'Roçadeira',800),(9,'Abajour',100),(10,'Pendente',180),(11,'Shampoo',90);
-UNLOCK TABLES;
+INSERT INTO `produto` (`id`,`nome`,`preco`) VALUES 
+ (1,'Computador',2000),
+ (2,'Impressora',800),
+ (3,'Mouse',80),
+ (4,'Mesa de escritório',300),
+ (5,'Toalha',50),
+ (6,'Colcha',200),
+ (7,'TV true color',1200),
+ (8,'Roçadeira',800),
+ (9,'Abajour',100),
+ (10,'Pendente',180),
+ (11,'Shampoo',90),
+ (12,'Produto 12',10),
+ (13,'Produto 13',10),
+ (14,'Produto 14',10),
+ (15,'Produto 15',10),
+ (16,'Produto 16',10),
+ (17,'Produto 17',10),
+ (18,'Produto 18',10),
+ (19,'Produto 19',10),
+ (20,'Produto 20',10),
+ (21,'Produto 21',10),
+ (22,'Produto 22',10),
+ (23,'Produto 23',10),
+ (24,'Produto 24',10),
+ (25,'Produto 25',10),
+ (26,'Produto 26',10),
+ (27,'Produto 27',10),
+ (28,'Produto 28',10),
+ (29,'Produto 29',10),
+ (30,'Produto 30',10),
+ (31,'Produto 31',10),
+ (32,'Produto 32',10),
+ (33,'Produto 34',10),
+ (34,'Produto 35',10),
+ (35,'Produto 36',10),
+ (36,'Produto 37',10),
+ (37,'Produto 38',10),
+ (38,'Produto 39',10),
+ (39,'Produto 40',10),
+ (40,'Produto 41',10),
+ (41,'Produto 42',10),
+ (42,'Produto 43',10),
+ (43,'Produto 44',10),
+ (44,'Produto 45',10),
+ (45,'Produto 46',10),
+ (46,'Produto 47',10),
+ (47,'Produto 48',10),
+ (48,'Produto 49',10),
+ (49,'Produto 50',10);
 /*!40000 ALTER TABLE `produto` ENABLE KEYS */;
 
+
 --
--- Table structure for table `produto_categoria`
+-- Definition of table `produto_categoria`
 --
 
 DROP TABLE IF EXISTS `produto_categoria`;
@@ -297,15 +380,66 @@ CREATE TABLE `produto_categoria` (
 -- Dumping data for table `produto_categoria`
 --
 
-
 /*!40000 ALTER TABLE `produto_categoria` DISABLE KEYS */;
-LOCK TABLES `produto_categoria` WRITE;
-INSERT INTO `produto_categoria` VALUES (1,1),(1,4),(2,1),(2,2),(2,4),(3,1),(3,4),(4,2),(5,3),(6,3),(7,4),(8,5),(9,6),(10,6),(11,7);
-UNLOCK TABLES;
+INSERT INTO `produto_categoria` (`produto_id`,`categoria_id`) VALUES 
+ (1,1),
+ (1,4),
+ (2,1),
+ (2,2),
+ (2,4),
+ (3,1),
+ (3,4),
+ (4,2),
+ (5,3),
+ (6,3),
+ (7,4),
+ (8,5),
+ (9,6),
+ (10,6),
+ (11,7),
+ (12,1),
+ (13,1),
+ (14,1),
+ (15,1),
+ (16,1),
+ (17,1),
+ (18,1),
+ (19,1),
+ (20,1),
+ (21,1),
+ (22,1),
+ (23,1),
+ (24,1),
+ (25,1),
+ (26,1),
+ (27,1),
+ (28,1),
+ (29,1),
+ (30,1),
+ (31,1),
+ (32,1),
+ (33,1),
+ (34,1),
+ (35,1),
+ (36,1),
+ (37,1),
+ (38,1),
+ (39,1),
+ (40,1),
+ (41,1),
+ (42,1),
+ (43,1),
+ (44,1),
+ (45,1),
+ (46,1),
+ (47,1),
+ (48,1),
+ (49,1);
 /*!40000 ALTER TABLE `produto_categoria` ENABLE KEYS */;
 
+
 --
--- Table structure for table `telefone`
+-- Definition of table `telefone`
 --
 
 DROP TABLE IF EXISTS `telefone`;
@@ -319,13 +453,16 @@ CREATE TABLE `telefone` (
 -- Dumping data for table `telefone`
 --
 
-
 /*!40000 ALTER TABLE `telefone` DISABLE KEYS */;
-LOCK TABLES `telefone` WRITE;
-INSERT INTO `telefone` VALUES (1,'35988884444'),(1,'35999998888');
-UNLOCK TABLES;
+INSERT INTO `telefone` (`cliente_id`,`telefones`) VALUES 
+ (1,'35988884444'),
+ (1,'35999998888'),
+ (2,'35988884444'),
+ (2,'35999998888');
 /*!40000 ALTER TABLE `telefone` ENABLE KEYS */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
@@ -333,5 +470,4 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
